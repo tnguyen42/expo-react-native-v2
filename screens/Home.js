@@ -1,5 +1,11 @@
 import React, { useState, useCallback, useEffect } from 'react';
-import { FlatList, StyleSheet, RefreshControl } from 'react-native';
+import {
+  FlatList,
+  StyleSheet,
+  RefreshControl,
+  TouchableOpacity,
+  Text,
+} from 'react-native';
 import PalettePreview from '../components/PalettePreview';
 
 const Home = ({ navigation }) => {
@@ -45,6 +51,15 @@ const Home = ({ navigation }) => {
       )}
       refreshControl={
         <RefreshControl refreshing={isRefreshing} onRefresh={handleRefresh} />
+      }
+      ListHeaderComponent={
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate('Color Palette Modal');
+          }}
+        >
+          <Text>Launch Palette Modal</Text>
+        </TouchableOpacity>
       }
     />
   );
