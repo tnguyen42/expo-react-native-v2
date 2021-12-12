@@ -8,8 +8,9 @@ import {
 } from 'react-native';
 import PalettePreview from '../components/PalettePreview';
 
-const Home = ({ navigation }) => {
+const Home = ({ navigation, route }) => {
   const URL = 'https://color-palette-api.kadikraman.now.sh/palettes';
+  const newColorPalette = route?.params?.newColorPalette;
 
   const [colorPalettes, setColorPalettes] = useState([]);
   const [isRefreshing, setIsRefreshing] = useState(false);
@@ -26,6 +27,12 @@ const Home = ({ navigation }) => {
   useEffect(() => {
     fetchColorPalettes();
   }, []);
+
+  useEffect(() => {
+    if (newColorPalette) {
+      setColorPalettes((palettes) => [newColorPalette, ...palettes]);
+    }
+  }, [newColorPalette]);
 
   const handleRefresh = useCallback(async () => {
     setIsRefreshing(true);
@@ -58,7 +65,7 @@ const Home = ({ navigation }) => {
             navigation.navigate('Color Palette Modal');
           }}
         >
-          <Text>Launch Palette Modal</Text>
+          <Text style={styles.buttonText}>Add a color scheme</Text>
         </TouchableOpacity>
       }
     />
@@ -69,6 +76,12 @@ const styles = StyleSheet.create({
   list: {
     padding: 10,
     backgroundColor: 'white',
+  },
+  buttonText: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: 'teal',
+    marginBottom: 10,
   },
 });
 
